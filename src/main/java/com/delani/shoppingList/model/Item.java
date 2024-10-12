@@ -19,7 +19,5 @@ public class Item {
   private String name;
   private String image;
   private String category;
-  private int stock;
   private String note;
-
 }

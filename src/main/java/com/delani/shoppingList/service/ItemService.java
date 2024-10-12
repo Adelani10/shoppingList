@@ -15,4 +15,12 @@ public class ItemService {
   public List<Item> getAllItems() {
     return itemRepository.findAll();
   }
+
+  public void addItem( Item item) {
+     itemRepository.save(item);
+  }
+
+  public List<Item> search(String keyword){
+    return itemRepository.findByKeyword(keyword);
+  }
 }
