@@ -34,9 +34,24 @@ public class UserController {
       return new ResponseEntity<>(userService.getCurrentUser(), HttpStatus.OK);
   }
 
-  @PutMapping("/current_list")
+  @PutMapping("/add_to_current_list")
   public ResponseEntity<List<Item>> addToCurrentList(@RequestBody Item item) {
       return new ResponseEntity<>(userService.addToCurrentList(item), HttpStatus.OK);
+  }
+
+  @PutMapping("/remove_from_current_list")
+  public ResponseEntity<List<Item>> removeFromCurrentList(@RequestBody Item item) {
+      return new ResponseEntity<>(userService.removeFromCurrentList(item), HttpStatus.OK);
+  }
+
+  @PutMapping("/increase_item_quantity")
+  public ResponseEntity<Integer> increaseQty(@RequestBody Item item) {
+      return new ResponseEntity<>(userService.increaseQty(item), HttpStatus.OK);
+  }
+
+  @PutMapping("/decrease_item_quantity")
+  public ResponseEntity<Integer> decreaseQty(@RequestBody Item item) {
+      return new ResponseEntity<>(userService.decreaseQty(item), HttpStatus.OK);
   }
 
 }

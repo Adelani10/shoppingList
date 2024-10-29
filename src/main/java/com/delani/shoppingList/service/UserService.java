@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -91,5 +92,64 @@ public class UserService {
       throw new RuntimeException(e);
     }
     return currentList;
+  }
+
+  public List<Item> removeFromCurrentList(Item item) {
+    User user = getCurrentUser();
+    List<Item> currentList = user.getCurrentList();
+    try {
+      boolean exists = currentList.stream().anyMatch(existingItem -> existingItem.getId().equals(item.getId()));
+      if (exists) {
+        currentList.remove(item);
+        userRepository.save(user);
+      } else {
+        throw new RuntimeException("CurrentList doesn't contain item");
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return currentList;
+  }
+
+  public int increaseQty (Item item){
+    User user = getCurrentUser();
+    List<Item> currentList = user.getCurrentList();
+
+    try {
+      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(item.getId())).findFirst();
+      if (itemToBeEdited.isPresent()) {
+        Item mainItem = itemToBeEdited.get();
+        int qty = mainItem.getQuantity();
+        mainItem.setQuantity(qty++);
+        userRepository.save(user);
+        return mainItem.getQuantity();
+      } else {
+        throw new RuntimeException("itemToBeEdited isn't present");
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+  }
+
+  public int decreaseQty (Item item){
+    User user = getCurrentUser();
+    List<Item> currentList = user.getCurrentList();
+
+    try {
+      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(item.getId())).findFirst();
+      if (itemToBeEdited.isPresent()) {
+        Item mainItem = itemToBeEdited.get();
+        int qty = mainItem.getQuantity();
+          mainItem.setQuantity(qty--);
+          userRepository.save(user);
+          return mainItem.getQuantity();
+      } else {
+        throw new RuntimeException("itemToBeEdited isn't present");
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
   }
 }
