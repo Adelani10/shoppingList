@@ -1,5 +1,6 @@
 package com.delani.shoppingList.service;
 
+import com.delani.shoppingList.model.Item;
 import com.delani.shoppingList.model.User;
 import com.delani.shoppingList.model.UserPrincipal;
 import com.delani.shoppingList.repo.UserRepository;
@@ -12,6 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -71,5 +74,22 @@ public class UserService {
       }
     }
     return null;
+  }
+
+  public List<Item> addToCurrentList(Item item) {
+    User user = getCurrentUser();
+    List<Item> currentList = user.getCurrentList();
+    try {
+      boolean exists = currentList.stream().anyMatch(existingItem -> existingItem.getId().equals(item.getId()));
+      if (!exists) {
+        currentList.add(item);
+        userRepository.save(user);
+      } else {
+        throw new RuntimeException("CurrentList contains Item already");
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return currentList;
   }
 }

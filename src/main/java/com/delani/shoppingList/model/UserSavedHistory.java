@@ -6,17 +6,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "UsersCollection")
-public class User {
+@Document(collection = "UsersHistoryCollection")
+public class UserSavedHistory {
   @Id
-  private String userId;
-  private String username;
-  private String password;
-  private List<Item> currentList;
-  private List<UserSavedHistory> savedList;
+  private String id;
+  private String title;
+  private List<Item> items;
+  private boolean completed;
+  private LocalDate localDate;
 }

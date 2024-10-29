@@ -1,6 +1,7 @@
 package com.delani.shoppingList.service;
 
 import com.delani.shoppingList.model.Item;
+import com.delani.shoppingList.model.User;
 import com.delani.shoppingList.repo.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,5 @@ public class ItemService {
   public void addItem( Item item) {
      itemRepository.save(item);
   }
+
 }
