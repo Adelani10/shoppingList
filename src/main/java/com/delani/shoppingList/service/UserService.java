@@ -81,12 +81,12 @@ public class UserService {
     User user = getCurrentUser();
     List<Item> currentList = user.getCurrentList();
     try {
-      boolean exists = currentList.stream().anyMatch(existingItem -> existingItem.getId().equals(item.getId()));
-      if (!exists) {
+      boolean exists  = currentList.stream().anyMatch(existingItem -> existingItem.getId().equals(item.getId()));
+      if (!exists){
         currentList.add(item);
         userRepository.save(user);
       } else {
-        throw new RuntimeException("CurrentList contains Item already");
+        throw new RuntimeException("CurrentList contains item already");
       }
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -94,13 +94,14 @@ public class UserService {
     return currentList;
   }
 
-  public List<Item> removeFromCurrentList(Item item) {
+  public List<Item> removeFromCurrentList(String id) {
     User user = getCurrentUser();
     List<Item> currentList = user.getCurrentList();
     try {
-      boolean exists = currentList.stream().anyMatch(existingItem -> existingItem.getId().equals(item.getId()));
-      if (exists) {
-        currentList.remove(item);
+      Optional<Item> item = currentList.stream().filter(existingItem -> existingItem.getId().equals(id)).findFirst();
+      if (item.isPresent()){
+        Item itemToBeAdded = item.get();
+        currentList.remove(itemToBeAdded);
         userRepository.save(user);
       } else {
         throw new RuntimeException("CurrentList doesn't contain item");
@@ -111,16 +112,16 @@ public class UserService {
     return currentList;
   }
 
-  public int increaseQty (Item item){
+  public int increaseQty (String id){
     User user = getCurrentUser();
     List<Item> currentList = user.getCurrentList();
 
     try {
-      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(item.getId())).findFirst();
+      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(id)).findFirst();
       if (itemToBeEdited.isPresent()) {
         Item mainItem = itemToBeEdited.get();
         int qty = mainItem.getQuantity();
-        mainItem.setQuantity(qty++);
+        mainItem.setQuantity(qty + 1);
         userRepository.save(user);
         return mainItem.getQuantity();
       } else {
@@ -132,16 +133,16 @@ public class UserService {
 
   }
 
-  public int decreaseQty (Item item){
+  public int decreaseQty (String id){
     User user = getCurrentUser();
     List<Item> currentList = user.getCurrentList();
 
     try {
-      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(item.getId())).findFirst();
+      Optional<Item> itemToBeEdited = currentList.stream().filter(abc -> abc.getId().equals(id)).findFirst();
       if (itemToBeEdited.isPresent()) {
         Item mainItem = itemToBeEdited.get();
         int qty = mainItem.getQuantity();
-          mainItem.setQuantity(qty--);
+          mainItem.setQuantity(qty - 1);
           userRepository.save(user);
           return mainItem.getQuantity();
       } else {
@@ -152,4 +153,5 @@ public class UserService {
     }
 
   }
+
 }

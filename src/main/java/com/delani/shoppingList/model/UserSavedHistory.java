@@ -20,4 +20,5 @@ public class UserSavedHistory {
   private List<Item> items;
   private boolean completed;
   private LocalDate localDate;
+  private String userId;
 }

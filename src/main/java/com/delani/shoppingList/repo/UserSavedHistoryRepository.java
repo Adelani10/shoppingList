@@ -1,10 +1,10 @@
 package com.delani.shoppingList.repo;
 
-import com.delani.shoppingList.model.Item;
-import org.bson.types.ObjectId;
+
+import com.delani.shoppingList.model.UserSavedHistory;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemRepository extends MongoRepository<Item, String> {
+public interface UserSavedHistoryRepository extends MongoRepository<UserSavedHistory, String> {
 }
