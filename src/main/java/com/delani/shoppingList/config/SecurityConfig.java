@@ -35,7 +35,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
         .csrf(customizer -> customizer.disable())
-        .authorizeHttpRequests(request -> request.requestMatchers("api/v1/user/register", "api/v1/user/login")
+        .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/user/register", "/api/v1/user/login")
             .permitAll()
             .anyRequest()
             .authenticated())
@@ -61,5 +61,6 @@ public class SecurityConfig {
     return authenticationConfiguration.getAuthenticationManager();
 
   }
+
 }
 
