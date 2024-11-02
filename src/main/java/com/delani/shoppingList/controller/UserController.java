@@ -54,5 +54,4 @@ public class UserController {
       return new ResponseEntity<>(userService.decreaseQty(id), HttpStatus.OK);
   }
 
-
 }
