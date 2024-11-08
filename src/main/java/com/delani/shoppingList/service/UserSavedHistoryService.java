@@ -28,6 +28,7 @@ public class UserSavedHistoryService {
     List<Item> list = new ArrayList<>();
     User user = userService.getCurrentUser();
     userSavedHistory.setUserId(user.getUserId());
+    userSavedHistory.setItems(user.getCurrentList());
     user.getSavedList().add(userSavedHistory);
     user.setCurrentList(list);
     userRepository.save(user);
