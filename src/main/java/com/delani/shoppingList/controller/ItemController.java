@@ -21,9 +21,6 @@ public class ItemController {
   @Autowired
   private SearchRepository searchRepository;
 
-
-
-
   @GetMapping("/items")
   public ResponseEntity<List<Item>> getallItems(){
       return new ResponseEntity<>(itemService.getAllItems(), HttpStatus.OK);

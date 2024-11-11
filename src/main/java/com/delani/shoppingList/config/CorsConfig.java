@@ -14,11 +14,13 @@ public class CorsConfig {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://shoppinglist-yw62.onrender.com")
-            .allowedMethods("*")
-            .allowedHeaders("*")
+            .allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://shopping-list-fe-nu.vercel.app", "https://shoppinglist-yw62.onrender.com")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("Authorization", "Content-Type")
             .allowCredentials(true);
       }
     };
   }
 }
+
+
