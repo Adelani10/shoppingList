@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "https://shopping-list-fe-nu.vercel.app", "https://shoppinglist-yw62.onrender.com"})
 @RequestMapping("/api/v1")
 public class UserSavedHistoryController {
 
