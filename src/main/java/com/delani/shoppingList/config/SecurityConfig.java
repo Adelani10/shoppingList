@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +34,10 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
     httpSecurity
         .csrf(customizer -> customizer.disable())
+        .cors(Customizer.withDefaults())
         .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/user/register", "/api/v1/user/login")
             .permitAll()
             .anyRequest()
